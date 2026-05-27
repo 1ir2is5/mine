@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Minecraft Escape</title>
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+}
+
+.screen {
+  width: 100vw;
+  height: 100vh;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.active {
+  display: flex;
+}
+
+.background {
+  background:
+    linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.35)),
+    url("images/background.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.title {
+  color: white;
+  font-size: 70px;
+  font-weight: bold;
+  text-shadow: 5px 5px 0 #222;
+  margin-bottom: 15px;
+}
+
+.subtitle {
+  color: #ffd633;
+  font-size: 34px;
+  font-weight: bold;
+  text-shadow: 3px 3px 0 #222;
+  margin-bottom: 60px;
+}
+
+button {
+  background: #2faa3f;
+  color: white;
+  font-size: 28px;
+  font-weight: bold;
+  border: 5px solid #0f5a1c;
+  padding: 16px 70px;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 7px #063b10;
+}
+
+button:active {
+  transform: translateY(4px);
+  box-shadow: 0 3px #063b10;
+}
+
+.puzzle-img {
+  width: 82%;
+  max-width: 1000px;
+  border-radius: 15px;
+  box-shadow: 0 0 30px rgba(0,0,0,.7);
+  margin-bottom: 25px;
+}
+
+input {
+  width: 320px;
+  padding: 16px;
+  font-size: 24px;
+  border-radius: 10px;
+  border: 3px solid #aaa;
+  margin-bottom: 18px;
+}
+
+#message {
+  margin-top: 18px;
+  color: white;
+  font-size: 34px;
+  font-weight: bold;
+  text-shadow: 3px 3px 0 #111;
+}
+
+.success-box {
+  background: rgba(255, 241, 207, 0.95);
+  border: 10px solid #7a461f;
+  border-radius: 18px;
+  box-shadow: 0 14px 0 #3f230e;
+  padding: 50px;
+  text-align: center;
+}
+
+.success-title {
+  color: #188c2e;
+  font-size: 52px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.success-text {
+  color: #222;
+  font-size: 30px;
+  margin-bottom: 30px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 1. 환영 화면 -->
+<div id="welcomeScreen" class="screen background active">
+  <div class="title">환영합니다!</div>
+  <div class="subtitle">마인크래프트 방탈출 게임</div>
+  <button onclick="goPuzzle()">게임 시작</button>
+</div>
+
+<!-- 2. 문제 화면 -->
+<div id="puzzleScreen" class="screen background">
+  <img src="images/success.png" class="puzzle-img">
+
+  <input id="answerInput" placeholder="정답 입력">
+  <button onclick="checkAnswer()">확인</button>
+
+  <div id="message"></div>
+</div>
+
+<!-- 3. 정답 화면 -->
+<div id="successScreen" class="screen background">
+  <div class="success-box">
+    <div class="success-title">정답입니다!</div>
+    <div class="success-text">철문이 열리고 새로운 길이 나타났습니다!</div>
+    <button onclick="nextGame()">다음 게임</button>
+  </div>
+</div>
+
+<script>
+const answer = "3";
+
+function showOnly(screenId) {
+  document.getElementById("welcomeScreen").classList.remove("active");
+  document.getElementById("puzzleScreen").classList.remove("active");
+  document.getElementById("successScreen").classList.remove("active");
+
+  document.getElementById(screenId).classList.add("active");
+}
+
+function goPuzzle() {
+  showOnly("puzzleScreen");
+  document.getElementById("answerInput").value = "";
+  document.getElementById("message").innerText = "";
+  document.getElementById("answerInput").focus();
+}
+
+function checkAnswer() {
+  const userAnswer = document.getElementById("answerInput").value.trim();
+
+  if (userAnswer === answer) {
+    showOnly("successScreen");
+  } else {
+    document.getElementById("message").innerText = "❌ 다시 생각해보세요!";
+  }
+}
+
+function nextGame() {
+  alert("다음 스테이지로 연결하면 됩니다!");
+}
+</script>
+
+</body>
+</html>
